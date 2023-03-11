@@ -1,4 +1,6 @@
 BINARY_NAME=hello
+IMAGE_NAME=$(BINARY_NAME)-golang
+PORT=8080
 
 DEBUG ?=
 
@@ -59,7 +61,25 @@ help: ## Help
 	@echo ""
 
 .PHONY: check
-check: check-go check-golangci-lint ## Check utils requirements are installed
+check: check-go check-golangci-lint check-goreleaser check-docker ## Check utils requirements are installed
+
+##@ Docker
+
+.PHONY: Docker
+docker: ## Docker
+	@docker build . -t $(IMAGE_NAME):latest
+
+.PHONY: Docker debug
+docker-debug: Docker debug
+	@docker build . -f Dockerfile.debug  -t $(IMAGE_NAME)-debug:latest
+
+.PHONY: Docker run
+docker-run: ## Docker run
+	@docker run -it --rm -p $(PORT):$(PORT) $(IMAGE_NAME):latest
+
+.PHONY: Docker debug run
+docker-debug-run: ## Docker debug run
+	@docker run -it --rm -p $(PORT):$(PORT) $(IMAGE_NAME)-debug:latest
 
 ##@ Go
 
@@ -74,7 +94,7 @@ tests: ## Tests
 	$(call check_output,$$?)
 
 .PHONY: format
-fmt: ## Format
+format: ## Format
 	@echo "Running format..."
 	@go fmt ./...; \
 	$(call check_output,$$?)
@@ -93,17 +113,16 @@ quality: format lint tests  ## Run all quality
 
 .PHONY: build
 build: ## Cross platform build
-	@echo "Building for darwin/amd64"
-	@GOARCH=$$(go env GOARCH) GOOS=$$(go env GOOS) go build -o output/$(BINARY_NAME)-$$(go env GOOS)-$$(go env GOARCH) cmd/$(BINARY_NAME).go; \
+	@goreleaser build --single-target --clean --snapshot
 	$(call check_output,$$?)
 
 
 .PHONY: run
 run: # Run
-	go run cmd/${BINARY_NAME}.go
+	@go run cmd/${BINARY_NAME}/main.go
 
 .PHONY: clean
 clean: ## Clean binaries
 	@go clean
-	@rm output/$(BINARY_NAME)-$$(go env GOOS)-$$(go env GOARCH); \
+	@rm -rf dist/; \
 	$(call check_output,$$?)

@@ -1,38 +1,26 @@
 ---
-name: Create Release
+name: Release
 on:
   push:
     branches:
-      - master
+      - main
+
 jobs:
-  release:
-    name: Create Release
-    runs-on: ubuntu-latest
+  quality:
+    uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/run-go-quality.yaml@main
+  docker-build:
+    uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/run-docker-build.yaml@main
     needs: quality
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
-    steps:
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@4
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # personal access token
+  go-release:
+    uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/push-go-release.yaml@main
+    needs: docker-build
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+  docker-release:
+    uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/push-docker-release.yaml@main
+    needs: go-release
+    with:
+      release: ${{ needs.go-release.outputs.new_release_version}}
+      pre-built-image: true
