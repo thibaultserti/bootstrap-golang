@@ -11,3 +11,9 @@ jobs:
   docker-build:
     uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/run-docker-build.yaml@main
     needs: quality
+  docker-release:
+    uses: thibaultserti/gh-actions-reusable-workflows/.github/workflows/push-docker-release.yaml@main
+    needs: docker-build
+    with:
+      release: latest
+      pre-built-image: true
