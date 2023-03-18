@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.0.0...v1.1.0) (2023-03-18)
+
+
+### Features
+
+* use signed image ([c0bbe5f](https://github.com/thibaultserti/bootstrap-golang/commit/c0bbe5f643e71bf92aa656d211ab7d3e6433dee3))
+
 # 1.0.0 (2023-03-15)
 
 
