@@ -29,12 +29,3 @@ To download dependencies:
 ```bash
 go mod vendor
 ```
-
-## Signature public for Docker images
-
-```
------BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEIR3N2x29nKf+epTnz1jNJMDUcJlb
-w4GbHTfLugxB8zqWa5RY1oiQXzaOfeihU5iDCGxvCzgm2BUg0PPsGtk1kQ==
------END PUBLIC KEY-----
-```
