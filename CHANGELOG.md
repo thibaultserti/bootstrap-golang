@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.1.0...v1.2.0) (2023-03-19)
+
+
+### Bug Fixes
+
+* fix image signing ([5b73b84](https://github.com/thibaultserti/bootstrap-golang/commit/5b73b84dce340136243851d95e3c42f404aa4bc6))
+
+
+### Features
+
+* push docker image on PR ([034dedd](https://github.com/thibaultserti/bootstrap-golang/commit/034dedd78c2c07c05ffd1d453680ce110ace70cb))
+
 # [1.1.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.0.0...v1.1.0) (2023-03-18)
 
 
