@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.2.0...v1.3.0) (2023-03-20)
+
+
+### Features
+
+* add coverage ([729047a](https://github.com/thibaultserti/bootstrap-golang/commit/729047a4cf0f406a874ed62dc8cd0ff0eb13bda1))
+* add logging and load conf from YAML ([7c71a0b](https://github.com/thibaultserti/bootstrap-golang/commit/7c71a0b4c90248b833670c67111194376133751c)), closes [#7](https://github.com/thibaultserti/bootstrap-golang/issues/7)
+* **makefile:** add coverage ([4ff1a1a](https://github.com/thibaultserti/bootstrap-golang/commit/4ff1a1a7ada35f39b838532510c757ebf7183d8f))
+
 # [1.2.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.1.0...v1.2.0) (2023-03-19)
 
 
