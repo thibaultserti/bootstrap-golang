@@ -93,6 +93,12 @@ tests: ## Tests
 	@go test ./test; \
 	$(call check_output,$$?)
 
+.PHONY: coverage
+coverage: ## Coverage
+	@echo "Running coverage..."
+	@go test -v -race -vet off -covermode atomic -coverprofile tmp/coverage.gocov ./test/... -coverpkg=./...; \
+	$(call check_output,$$?)
+
 .PHONY: format
 format: ## Format
 	@echo "Running format..."
@@ -109,7 +115,7 @@ lint: ## Lint
 	$(call check_output,$$?)
 
 .PHONY: quality
-quality: format lint tests  ## Run all quality
+quality: format lint  ## Run all quality
 
 .PHONY: build
 build: ## Cross platform build
