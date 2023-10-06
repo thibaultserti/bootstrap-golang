@@ -119,7 +119,7 @@ quality: format lint  ## Run all quality
 
 .PHONY: build
 build: ## Cross platform build
-	@goreleaser build --single-target --clean --snapshot
+	@goreleaser build --single-target --clean --snapshot; \
 	$(call check_output,$$?)
 
 
