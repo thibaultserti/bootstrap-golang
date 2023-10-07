@@ -26,5 +26,5 @@ jobs:
       packages: write
     with:
       release: ${{ needs.go-release.outputs.new_release_version}}
-      use-prebuilt-image: true
+      use-prebuilt-image: false
       enable-signing: true
