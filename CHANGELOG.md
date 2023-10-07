@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/thibaultserti/bootstrap-golang/compare/v1.4.0...v1.4.1) (2023-10-07)
+
+
+### Bug Fixes
+
+* trigger release ([a1f2ceb](https://github.com/thibaultserti/bootstrap-golang/commit/a1f2ceb344b9faa51ac016fd874ce8cdf7e35b71))
+
 # [1.4.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.3.0...v1.4.0) (2023-10-07)
 
 
