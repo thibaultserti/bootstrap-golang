@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.3.0...v1.4.0) (2023-10-07)
+
+
+### Features
+
+* add logging based on env and docker-compose ([542e3a4](https://github.com/thibaultserti/bootstrap-golang/commit/542e3a412181bd910223af7e1d3e7d500686aa33)), closes [#12](https://github.com/thibaultserti/bootstrap-golang/issues/12) [#13](https://github.com/thibaultserti/bootstrap-golang/issues/13)
+
 # [1.3.0](https://github.com/thibaultserti/bootstrap-golang/compare/v1.2.0...v1.3.0) (2023-03-20)
 
 
