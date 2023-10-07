@@ -19,7 +19,6 @@ func LoadConfig(config_file string) (config Configuration, err error) {
 	viper.SetEnvPrefix("HELLO")
 
 	viper.AutomaticEnv()
-
 	err = viper.ReadInConfig()
 	if err != nil {
 		return
