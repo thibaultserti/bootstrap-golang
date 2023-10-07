@@ -10,32 +10,32 @@ import (
 	logging "github.com/sirupsen/logrus"
 )
 
-var port string
-var hostname string
+func main() {
 
-func init() {
-	// Log as JSON instead of the default ASCII formatter.
-	logging.SetFormatter(&logging.JSONFormatter{})
-	// Output to stdout instead of the default stderr
-	// Can be any io.Writer, see below for File example
-	logging.SetOutput(os.Stdout)
-	// Only log the warning severity or above.
-	logging.SetLevel(logging.InfoLevel)
+	var configuration config.Configuration
 
 	configPath := "config/configuration.yaml"
-	viper, err := config.LoadConfig(configPath)
+	configuration, err := config.LoadConfig(configPath)
 	if err != nil {
-		logging.Errorf("Fail to read file %s", configPath)
+		logging.Fatal("Cannot load config")
+	}
+	level, err := logging.ParseLevel(configuration.LogLevel)
+	if err != nil {
+		logging.Fatal("Log level invalid")
 	}
 
-	port = viper.GetString("port")
-	hostname = viper.GetString("hostname")
+	if configuration.Env != "prod" && configuration.Env != "prd" {
+		logging.SetFormatter(&logging.TextFormatter{})
+	} else {
+		logging.SetFormatter(&logging.JSONFormatter{})
+	}
+	logging.SetOutput(os.Stdout)
+	logging.SetLevel(level)
 
-}
-func main() {
-	logging.Info(fmt.Sprintf("Serving on http://%s:%s ...", hostname, port))
+	logging.Info(fmt.Sprintf("Serving on http://%s:%s ...", configuration.Hostname, configuration.Port))
 	http.HandleFunc("/", HelloServer)
-	err := http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+
+	err = http.ListenAndServe(fmt.Sprintf(":%s", configuration.Port), nil)
 	if err != nil {
 		logging.Fatal(err)
 	}

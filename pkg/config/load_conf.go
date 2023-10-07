@@ -1,22 +1,30 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/spf13/viper"
 )
 
-func LoadConfig(config_file string) (*viper.Viper, error) {
-	// Créer une nouvelle instance de Viper
+type Configuration struct {
+	Env      string `mapstructure:"env"`
+	LogLevel string `mapstructure:"logLevel"`
+	Hostname string `mapstructure:"hostname"`
+	Port     string `mapstructure:"port"`
+}
+
+func LoadConfig(config_file string) (config Configuration, err error) {
 	viper := viper.New()
 
-	// Définir le nom du fichier de configuration à charger
 	viper.SetConfigFile(config_file)
+	viper.SetConfigType("yaml")
+	viper.SetEnvPrefix("HELLO")
 
-	// Lire le fichier de configuration
-	if err := viper.ReadInConfig(); err != nil {
-		return nil, fmt.Errorf("failed to read config file: %s", err)
+	viper.AutomaticEnv()
+
+	err = viper.ReadInConfig()
+	if err != nil {
+		return
 	}
 
-	return viper, nil
+	err = viper.Unmarshal(&config)
+	return
 }

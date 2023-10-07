@@ -68,18 +68,17 @@ check: check-go check-golangci-lint check-goreleaser check-docker ## Check utils
 .PHONY: Docker
 docker: ## Docker
 	@docker build . -t $(IMAGE_NAME):latest
-
-.PHONY: Docker debug
-docker-debug: Docker debug
-	@docker build . -f Dockerfile.debug  -t $(IMAGE_NAME)-debug:latest
-
-.PHONY: Docker run
-docker-run: ## Docker run
 	@docker run -it --rm -p $(PORT):$(PORT) $(IMAGE_NAME):latest
 
-.PHONY: Docker debug run
-docker-debug-run: ## Docker debug run
+.PHONY: Docker debug
+docker-debug: ## Docker debug
+	@docker build . -f Dockerfile.debug  -t $(IMAGE_NAME)-debug:latest
 	@docker run -it --rm -p $(PORT):$(PORT) $(IMAGE_NAME)-debug:latest
+
+.PHONY: Docker compose
+docker-compose: ## Docker compose
+	@docker-compose build
+	@docker-compose run
 
 ##@ Go
 
